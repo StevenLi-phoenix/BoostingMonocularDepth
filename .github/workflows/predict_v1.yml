@@ -21,7 +21,9 @@ jobs:
     - name: Install envirement
       run: pip3 install -r requirements.txt
     - name: Download datasets
-      run: ./setup.sh
+      run: |
+        chmod +x setup.sh
+        ./setup.sh
     - name: Run prediction with pretrained params
       run: |
         python run.py --Final --data_dir inputs --output_dir  outputs/midas/ --depthNet 0
