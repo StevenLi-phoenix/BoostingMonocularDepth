@@ -42,15 +42,6 @@ jobs:
     - name: Download datasets
       run: |
         ./setup.sh
-    - name: cuda-toolkit
-      # You may pin to the exact commit or the version.
-      # uses: Jimver/cuda-toolkit@290bacef8a00668d064071ae181ab55396572c6b
-      uses: Jimver/cuda-toolkit@v0.2.7
-      with:
-        # Cuda version
-        cuda: "11.7.0" # optional, default is 11.7.0
-        # Installation method, can be either 'local' or 'network'. 'local' downloads the entire installer with all packages and runs that (you can still only install certain packages with sub-packages on Windows). 'network' downloads a smaller executable which only downloads necessary packages which you can define in subPackages
-        method: 'network' # optional, default is local
     - name: Run prediction with pretrained params
       run: |
         python run.py --Final --data_dir inputs --output_dir  outputs/midas/ --depthNet 0
