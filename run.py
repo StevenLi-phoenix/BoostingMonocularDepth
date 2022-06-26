@@ -69,7 +69,7 @@ def run(dataset, option):
     elif option.depthNet == 2:
         global leresmodel
         leres_model_path = "res101.pth"
-        checkpoint = torch.load(leres_model_path)
+        checkpoint = torch.load(leres_model_path, map_location=torch.device('cpu'))
         leresmodel = RelDepthModel(backbone='resnext101')
         leresmodel.load_state_dict(strip_prefix_if_present(checkpoint['depth_model'], "module."),
                                     strict=True)
