@@ -29,7 +29,7 @@ import warnings
 warnings.simplefilter('ignore', np.RankWarning)
 
 # select device
-device = torch.device("cuda")
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print("device: %s" % device)
 
 # Global variables
@@ -39,7 +39,7 @@ srlnet = None
 leresmodel = None
 factor = None
 whole_size_threshold = 3000  # R_max from the paper
-GPU_threshold = 1600 - 32 # Limit for the GPU (NVIDIA RTX 2080), can be adjusted 
+GPU_threshold = 3000 # Limit for the GPU set 3000 for colab 12G memory
 
 # MAIN PART OF OUR METHOD
 def run(dataset, option):
@@ -69,7 +69,7 @@ def run(dataset, option):
     elif option.depthNet == 2:
         global leresmodel
         leres_model_path = "res101.pth"
-        checkpoint = torch.load(leres_model_path)
+        checkpoint = torch.load(leres_model_path, map_location=torch.device('cpu'))
         leresmodel = RelDepthModel(backbone='resnext101')
         leresmodel.load_state_dict(strip_prefix_if_present(checkpoint['depth_model'], "module."),
                                     strict=True)
